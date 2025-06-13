@@ -1,0 +1,37 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ScheduleManagerTest {
+
+    @Test
+    public void testAddSchedule() {
+        ScheduleManager manager = new ScheduleManager();
+        manager.addSchedule("중간고사", "2025-06-20", "시험");
+
+        assertEquals(1, manager.getCount());
+        assertEquals("[시험] 중간고사 - 2025-06-20", manager.getSchedule(0));
+    }
+
+    @Test
+    public void testDeleteScheduleValid() {
+        ScheduleManager manager = new ScheduleManager();
+        manager.addSchedule("과제 제출", "2025-06-15", "과제");
+
+        boolean deleted = manager.deleteSchedule(0);
+        assertTrue(deleted);
+        assertEquals(0, manager.getCount());
+    }
+
+    @Test
+    public void testDeleteScheduleInvalid() {
+        ScheduleManager manager = new ScheduleManager();
+        boolean deleted = manager.deleteSchedule(1);
+        assertFalse(deleted);
+    }
+
+    @Test
+    public void testGetInvalidSchedule() {
+        ScheduleManager manager = new ScheduleManager();
+        assertNull(manager.getSchedule(5));
+    }
+}
